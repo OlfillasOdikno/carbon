@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import dynamic from 'next/dynamic'
 import hljs from 'highlight.js/lib/core'
