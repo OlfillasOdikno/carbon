@@ -35,6 +35,7 @@ import {
 import { getRouteState } from '../lib/routing'
 import { getSettings, unescapeHtml, formatCode, omit } from '../lib/util'
 import domtoimage from '../lib/dom-to-image'
+import { nodeToSvg } from '../lib/svg'
 
 const languageIcon = <LanguageIcon />
 
@@ -133,8 +134,9 @@ class Editor extends React.Component {
     }
 
     if (format === 'svg') {
-      return domtoimage
-        .toSvg(node, config)
+      console.log(config)
+      console.log(node)
+      return nodeToSvg(node, config)
         .then(dataURL =>
           dataURL
             .replace(/&nbsp;/g, '&#160;')
