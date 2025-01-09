@@ -134,8 +134,8 @@ class Editor extends React.Component {
     }
 
     if (format === 'svg') {
-      console.log(config)
-      console.log(node)
+      //console.log(config)
+      //console.log(node)
       return nodeToSvg(node, config)
         .then(dataURL =>
           dataURL
