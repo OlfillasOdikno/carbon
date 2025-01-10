@@ -62,7 +62,8 @@
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
     "react-image-crop": "^6.0.16",
-    "tohash": "^1.0.2"
+    "tohash": "^1.0.2",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@applitools/eyes-cypress": "^3.25.7",
