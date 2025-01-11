@@ -149,7 +149,7 @@ class Editor extends React.Component {
             .replace(
               // current font-family used
               new RegExp(
-                '@font-face\\s+{\\s+font-family: (?!"*' + this.state.fontFamily + ').*?}',
+                `@font-face\\s*{\\s*font-family:\\s*["']?(?!${this.state.fontFamily})[^'"]*?["']?.*?src:\\s*url\\(['"][^'"]*?base64[^'"]*?['"]\\);[^}]*}`,
                 'g'
               ),
               ''
