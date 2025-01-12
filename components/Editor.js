@@ -157,6 +157,7 @@ class Editor extends React.Component {
         )
         .then(uri => uri.slice(uri.indexOf(',') + 1))
         .then(data => new Blob([data], { type: 'image/svg+xml' }))
+        .catch(console.error)
     }
 
     if (format === 'blob') {

@@ -65,7 +65,7 @@
     "react-image-crop": "^6.0.16",
     "tohash": "^1.0.2",
     "uuid": "^11.0.5",
-    "wawoff2": "^2.0.1"
+    "woff2-encoder": "^1.1.0"
   },
   "devDependencies": {
     "@applitools/eyes-cypress": "^3.25.7",
