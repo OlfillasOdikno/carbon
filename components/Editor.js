@@ -35,6 +35,7 @@ import {
 import { getRouteState } from '../lib/routing'
 import { getSettings, unescapeHtml, formatCode, omit } from '../lib/util'
 import domtoimage from '../lib/dom-to-image'
+import { nodeToSvg } from '../lib/svg'
 
 const languageIcon = <LanguageIcon />
 
@@ -125,6 +126,9 @@ class Editor extends React.Component {
           if (className.includes('CodeMirror-cursors')) {
             return false
           }
+          if (className.includes('CodeMirror-measure')) {
+            return false;
+          }
         }
         return true
       },
@@ -133,8 +137,7 @@ class Editor extends React.Component {
     }
 
     if (format === 'svg') {
-      return domtoimage
-        .toSvg(node, config)
+      return nodeToSvg(node, config)
         .then(dataURL =>
           dataURL
             .replace(/&nbsp;/g, '&#160;')
@@ -147,7 +150,7 @@ class Editor extends React.Component {
             .replace(
               // current font-family used
               new RegExp(
-                '@font-face\\s+{\\s+font-family: (?!"*' + this.state.fontFamily + ').*?}',
+                `@font-face\\s*{\\s*font-family:\\s*["']?(?!${this.state.fontFamily})[^'"]*?["']?.*?src:\\s*url\\(['"][^'"]*?base64[^'"]*?['"]\\);[^}]*}`,
                 'g'
               ),
               ''
@@ -155,6 +158,7 @@ class Editor extends React.Component {
         )
         .then(uri => uri.slice(uri.indexOf(',') + 1))
         .then(data => new Blob([data], { type: 'image/svg+xml' }))
+        .catch(console.error)
     }
 
     if (format === 'blob') {
@@ -469,8 +473,8 @@ class Editor extends React.Component {
 }
 
 Editor.defaultProps = {
-  onUpdate: () => {},
-  onReset: () => {},
+  onUpdate: () => { },
+  onReset: () => { },
 }
 
 export default Editor
