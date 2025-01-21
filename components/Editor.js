@@ -126,6 +126,9 @@ class Editor extends React.Component {
           if (className.includes('CodeMirror-cursors')) {
             return false
           }
+          if (className.includes('CodeMirror-measure')) {
+            return false;
+          }
         }
         return true
       },
@@ -134,8 +137,6 @@ class Editor extends React.Component {
     }
 
     if (format === 'svg') {
-      //console.log(config)
-      //console.log(node)
       return nodeToSvg(node, config)
         .then(dataURL =>
           dataURL
@@ -472,8 +473,8 @@ class Editor extends React.Component {
 }
 
 Editor.defaultProps = {
-  onUpdate: () => {},
-  onReset: () => {},
+  onUpdate: () => { },
+  onReset: () => { },
 }
 
 export default Editor
