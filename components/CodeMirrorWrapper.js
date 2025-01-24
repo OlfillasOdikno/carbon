@@ -1,18 +1,9 @@
-import { forwardRef , lazy, Suspense} from 'react'
-const LazyCodeMirror = lazy(() =>
-    import('react-codemirror2').then((module) => ({
-      default: module.Controlled,
-    }))
-  );
-
-const CodeMirrorWrapper = forwardRef(function CodeMirrorWrapper(props, ref) {
-    if (typeof document === 'undefined') {
-        return <></>
-    }
-
-    return (<Suspense fallback={<div>Loading...</div>}>
-        <LazyCodeMirror {...props} ref={ref} />
-    </Suspense>)
-});
-
+let CodeMirrorWrapper
+if (typeof document === 'undefined') {
+  // server context, loading codemirror will cause error, so return a dummy component
+  CodeMirrorWrapper = () => <></>
+} else {
+  // client context, load the component with require, so it is synchronous
+  CodeMirrorWrapper = require('react-codemirror2').Controlled
+}
 export default CodeMirrorWrapper
