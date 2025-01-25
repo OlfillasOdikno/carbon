@@ -36,6 +36,7 @@ import { getRouteState } from '../lib/routing'
 import { getSettings, unescapeHtml, formatCode, omit } from '../lib/util'
 import domtoimage from '../lib/dom-to-image'
 import { nodeToSvg } from '../lib/svg'
+import { nodeToPng } from '../lib/png'
 
 const languageIcon = <LanguageIcon />
 
@@ -138,34 +139,19 @@ class Editor extends React.Component {
 
     if (format === 'svg') {
       return nodeToSvg(node, config)
-        .then(dataURL =>
-          dataURL
-            .replace(/&nbsp;/g, '&#160;')
-            // https://github.com/tsayen/dom-to-image/blob/fae625bce0970b3a039671ea7f338d05ecb3d0e8/src/dom-to-image.js#L551
-            .replace(/%23/g, '#')
-            .replace(/%0A/g, '\n')
-            // https://stackoverflow.com/questions/7604436/xmlparseentityref-no-name-warnings-while-loading-xml-into-a-php-file
-            .replace(/&(?!#?[a-z0-9]+;)/g, '&amp;')
-            // remove other fonts which are not used
-            .replace(
-              // current font-family used
-              new RegExp(
-                `@font-face\\s*{\\s*font-family:\\s*["']?(?!${this.state.fontFamily})[^'"]*?["']?.*?src:\\s*url\\(['"][^'"]*?base64[^'"]*?['"]\\);[^}]*}`,
-                'g'
-              ),
-              ''
-            )
-        )
         .then(uri => uri.slice(uri.indexOf(',') + 1))
         .then(data => new Blob([data], { type: 'image/svg+xml' }))
         .catch(console.error)
     }
 
     if (format === 'blob') {
-      return domtoimage.toBlob(node, config)
+      return nodeToPng(node, config)
+        .then(url => fetch(url))
+        .then(res => res.blob())
     }
-
+    // alert('format is blob')
     // Twitter and Imgur needs regular dataURLs
+    //TODO: fix this!
     return domtoimage.toPng(node, config)
   }
 
