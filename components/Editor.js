@@ -34,7 +34,6 @@ import {
 } from '../lib/constants'
 import { getRouteState } from '../lib/routing'
 import { getSettings, unescapeHtml, formatCode, omit } from '../lib/util'
-import domtoimage from '../lib/dom-to-image'
 import { nodeToSvg } from '../lib/svg'
 import { nodeToPng } from '../lib/png'
 
@@ -154,8 +153,7 @@ class Editor extends React.Component {
     }
     // alert('format is blob')
     // Twitter and Imgur needs regular dataURLs
-    //TODO: fix this!
-    return domtoimage.toPng(node, config)
+    return nodeToPng(node, config) // untested because the twitter thingy doesn't work locally bit it should work
   }
 
   tweet = () => {
