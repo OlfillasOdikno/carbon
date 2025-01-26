@@ -130,6 +130,9 @@ class Editor extends React.Component {
           if (className.includes('CodeMirror-measure')) {
             return false;
           }
+          if (className.includes('handler') && n.role === "separator") {
+            return false;
+          }
         }
         return true
       },
