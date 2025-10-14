@@ -135,6 +135,7 @@ class Editor extends React.Component {
         }
         return true
       },
+      textAsPath: false,
       width,
       height,
     }
